@@ -43,7 +43,7 @@ app.use(session({
     // secure: process.env.NODE_ENV === 'production',  // Secure cookies in production
     // httpOnly: true,   // Can't be accessed by JavaScript
   },
-  name: 'sessionId' // This will be the name of your session cookie
+  name: 'sessionId' //session name
 }));
 
 // Authentication
@@ -51,7 +51,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 passportSetup();
 
-// Logging (consider moving this earlier if you want to log all requests)
 app.use(httpLogger);
 
 // Routes
