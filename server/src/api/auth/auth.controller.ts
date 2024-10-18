@@ -52,6 +52,17 @@ class AuthController {
                           res.clearCookie('cartId')
                         }
                         
+                        // Set a secure cookie with the session ID
+                        res.cookie('sessionId', req.sessionID, {
+                            httpOnly: true,
+                            secure: true,
+                            sameSite: 'none',
+                            // secure: false,
+                            // sameSite: 'lax',
+                            maxAge: 30 * 60 * 1000, // 30 minutes
+                            // domain: '.onrender.com'
+                        });
+
                         // Remove any session-related code if not needed
                         return ResponseFormatter.success(res, { user }, 'Login successful');
 
@@ -77,14 +88,23 @@ class AuthController {
             // Destroy the session
             req.session.destroy((err) => {
                 if (err) {
-                    return ErrorBuilder.badRequest('Error destroying session');
+                    return ErrorBuilder.internal('Error destroying session');
                 }
 
                 // Clear the session cookie
-                res.clearCookie('sessionId', { path: '/' });
-
+                res.clearCookie('sessionId', {
+                    path: '/',
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'none',
+                });
                 // Clear this incase it was not cleared when the visitor logs in
-                res.clearCookie('visitorCartId', { path: '/' });
+                res.clearCookie('visitorCartId', {
+                    path: '/',
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'none',
+                });
     
                 // Send a response indicating successful logout
                 return ResponseFormatter.success(res, {}, 'Logged out successfully')

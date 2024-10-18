@@ -28,8 +28,8 @@ const Navbar = () => {
 
     const handleLogout = async() => {
         await userLogout()
-        Cookies.remove('visitorCartId')
-        Cookies.remove('sessionId')
+        Cookies.remove('visitorCartId', { path: '/', domain: '.onrender.com' });
+        Cookies.remove('sessionId', { path: '/', domain: '.onrender.com' });
         dispatch(logout());
     };
     

@@ -26,17 +26,16 @@ export const passportSetup = () => {
         }  
     }));
 
-    
-}
-passport.serializeUser((user: any, done) => {
-    done(null, user._id);
-});
+    passport.serializeUser((user: any, done) => {
+        done(null, user._id);
+    });
 
-passport.deserializeUser(async (id, done) => {
-    try {
-        const user = await UserModel.findById(id);
-        done(null, user);
-    } catch (error) {
-        done(error);
-    }
-});
+    passport.deserializeUser(async (id, done) => {
+        try {
+            const user = await UserModel.findById(id);
+            done(null, user);
+        } catch (error) {
+            done(error);
+        }
+    });
+}
