@@ -24,6 +24,8 @@ const envSchema: ObjectSchema = Joi.object({
     .valid("error", "warn", "info", "http", "debug")
     .default("info"),
   PASSPORT_SECRET: Joi.string().description('Passport secret').required(), 
+  CLIENT_ID: Joi.string().description('The client Id id required').required(),
+  DEVELOPMENT_ID: Joi.string().description('The development client Id id required').required()
 }).unknown(); // allow other variables
 
 // Validate the environment variables
@@ -47,7 +49,9 @@ interface Config {
   logLevel: string;
   passport: { 
     passportSecret: string
-  }
+  }, 
+  clientId: string,
+  developmentClientId: string
   
 }
 
@@ -60,7 +64,9 @@ const config: Config = {
   logLevel: envVars.LOG_LEVEL as string,
   passport: { 
     passportSecret: envVars.PASSPORT_SECRET as string
-  }
+  },
+  clientId: envVars.CLIENT_ID as string,
+  developmentClientId: envVars.DEVELOPMENT_ID as string
 };
 
 Object.freeze(config);
