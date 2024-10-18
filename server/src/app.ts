@@ -40,6 +40,7 @@ app.use(session({
   cookie: { 
     maxAge: 1000 * 60 * 30,  // 30 minutes expiration
     secure: false,
+    sameSite: 'none'
     // secure: process.env.NODE_ENV === 'production',  // Secure cookies in production
     // httpOnly: true,   // Can't be accessed by JavaScript
   },

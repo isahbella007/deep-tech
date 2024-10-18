@@ -119,6 +119,7 @@ async clearCart(userId: mongoose.Schema.Types.ObjectId | null, cartId: string | 
 
       
 
+    
       let cart: ICart | null = null;
 
       if (userId) {
@@ -126,11 +127,13 @@ async clearCart(userId: mongoose.Schema.Types.ObjectId | null, cartId: string | 
         if (!cart) {
           cart = new CartModel({ user: userId, items: [] });
         }
+        console.log('Cart Service -> getOrCreateCart no user', cart)
       } else if (cartId) {
         cart = await CartModel.findOne({ cartId: cartId }).populate('items.product');
         if (!cart) {
           cart = new CartModel({ cartId: cartId, items: [] });
         }
+        console.log('Cart Service -> getOrCreateCart cartId', cart)
       }
 
       if (!cart) {

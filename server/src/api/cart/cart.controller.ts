@@ -20,19 +20,22 @@ export class CartController {
           // console.log('Generated new cartId for visitor:', cartId);
         }
 
+        console.log('Cart Controller -> get Cart', userId, cartId)
         const cart = await cartService.getOrCreateCart(userId, cartId);
+
+        console.log('Cart Controller -> get Cart', cart)
 
         if (!userId) {
           // Set or update the visitorCartId cookie
           res.cookie('visitorCartId', cart.cartId, { 
             maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-            // httpOnly: true,
-            secure: false, // Use secure cookies in production
-            // sameSite: 'strict' // Protect against CSRF
+            httpOnly: true,
+            // secure: true, // Use secure cookies in production
+            sameSite: 'none' 
           });
         }
 
-        // console.log('getCart -> final details:', { userId, cartId: cart.cartId });
+        console.log('getCart -> final details:', { userId, cartId: cart.cartId });
 
 
       return ResponseFormatter.success(res, cart, 'Cart retrieved successfully');
