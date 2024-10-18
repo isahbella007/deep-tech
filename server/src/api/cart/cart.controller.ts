@@ -30,7 +30,7 @@ export class CartController {
           res.cookie('visitorCartId', cart.cartId, { 
             maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
             httpOnly: true,
-            // secure: true, // Use secure cookies in production
+            secure: true, // Use secure cookies in production
             sameSite: 'none' 
           });
         }
@@ -52,10 +52,18 @@ export class CartController {
       }
 
       const userId = req.user ? req.user._id : null;
-      const cartId = req.cookies.visitorCartId || null;
+      let cartId = req.cookies.visitorCartId || null;
 
+      console.log('Cart Controller -> we are adding to cart ', userId, cartId)
       if(!userId && !cartId){ 
-        // create generate the cookie
+        //  when you are adding to cart, if for some reason you cannot find the cartId and userId. generate again
+        cartId = uuidv4();
+        res.cookie('visitorCartId', cartId, { 
+          maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+          httpOnly: true,
+          secure: true, // Use secure cookies in production
+          sameSite: 'none' 
+        });
 
       }
       const { productId, quantity } = value;

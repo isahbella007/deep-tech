@@ -21,11 +21,13 @@ export const getCart = async (): Promise<Cart> => {
 };
 
 export const addToCart = async (productId: number, quantity: number): Promise<Cart> => {
+  console.log('add to cart called')
   const response = await axios.post(
     `${BaseUrl}cart/add`,
     { productId, quantity },
     {withCredentials: true}
   );
+  console.log('Add to cart response', response.data)
   return response.data.data;
 };
 

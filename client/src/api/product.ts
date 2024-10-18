@@ -16,7 +16,7 @@ export const getProduct = async (productId: string) => {
   
 export const getAllProducts = async () => {
     const response = await axios.get(`${BaseUrl}product`,  { withCredentials: true });
-    // console.log('responseee', response.data)
+    console.log('responseee', response.data)
     return response.data.data;
 };
 

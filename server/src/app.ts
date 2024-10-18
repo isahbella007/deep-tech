@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Custom middleware
-app.use(persistCartId);
+// app.use(persistCartId);
 
 // Session management
 app.use(session({ 
@@ -39,10 +39,9 @@ app.use(session({
   rolling: true,
   cookie: { 
     maxAge: 1000 * 60 * 30,  // 30 minutes expiration
-    secure: false,
-    sameSite: 'none'
-    // secure: process.env.NODE_ENV === 'production',  // Secure cookies in production
-    // httpOnly: true,   // Can't be accessed by JavaScript
+    secure: false, // set to false for local testing
+    // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    httpOnly: false, // temporarily set to false for debugging
   },
   name: 'sessionId' //session name
 }));

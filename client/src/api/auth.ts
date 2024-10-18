@@ -4,7 +4,7 @@ import { BaseUrl } from "../constant"
 
 export const userLogin = async(username:string, password:string) => { 
     const response = await axios.post(`${BaseUrl}auth/login`, {username, password}, {withCredentials: true})
-    // console.log('Login stuff', response)
+    console.log('Login stuff', response)
     return response.data
 }
 
