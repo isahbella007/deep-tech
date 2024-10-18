@@ -18,7 +18,7 @@ const app = express();
 // Security Headers
 app.use(helmet());
 app.use(cors({
-  origin: config.clientId,
+  origin: [config.developmentClientId, config.clientId],
   credentials: true,
   // optionsSuccessStatus: 200,
 }));

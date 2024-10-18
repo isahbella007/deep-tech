@@ -38,7 +38,7 @@ const ProductList = () => {
   }
   
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>Loading... API deployment was done on the free tier with onrender and the server has been inactive. Please be Patient. It should be up in 2 minutes</div>;
   }
 
   if (error) {

@@ -71,7 +71,7 @@ const CartPage = () => {
           <div className="mt-4">
             <h2 className="text-xl font-bold">Total: ${calculateTotal()}</h2>
           </div>
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 flex items-center">
+          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4 flex items-center" disabled={true}>
             <ShoppingCart className="mr-2 h-4 w-4" /> Proceed to Checkout
           </button>
         </>

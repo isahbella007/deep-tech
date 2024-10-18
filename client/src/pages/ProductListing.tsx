@@ -105,47 +105,85 @@ const ProductListing  = () => {
   return (
     <Layout>
       <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-3xl font-bold">Product Listing</h1>
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-6">
+          <h1 className="text-3xl font-bold mb-4 sm:mb-0">Product Listing</h1>
           <button
             onClick={handleAddProduct}
-            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 w-full sm:w-auto"
           >
             Add New Product
           </button>
         </div>
-        <table className="w-full bg-white shadow-md rounded">
-          <thead>
-            <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-              <th className="py-3 px-6 text-left">S/N</th>
-              <th className="py-3 px-6 text-left">Name</th>
-              <th className="py-3 px-6 text-left">Price</th>
-              <th className="py-3 px-6 text-left">Quantity</th>
-              <th className="py-3 px-6 text-left">Description</th>
-              <th className="py-3 px-6 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="text-gray-600 text-sm font-light">
-            {products.map((product, index) => (
-              <tr key={product._id} className="border-b border-gray-200 hover:bg-gray-100">
-                <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
-                <td className="py-3 px-6 text-left">{product.name}</td>
-                <td className="py-3 px-6 text-left">${product.price.toFixed(2)}</td>
-                <td className="py-3 px-6 text-left">{product.quantity}</td>
-                <td className="py-3 px-6 text-left">{product.description}</td>
-                <td className="py-3 px-6 text-center">
-                <button 
-                    className="text-blue-500 hover:underline mr-4"
-                    onClick={() => handleEditProduct(product)}
-                  >
-                    Edit
-                  </button>
-                  <button className="text-red-500 hover:underline" onClick={() => handleDelete(product)}>Delete</button>
-                </td>
+        
+        {/* Table for larger screens */}
+        <div className="hidden md:block">
+          <table className="w-full bg-white shadow-md rounded">
+            <thead>
+              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <th className="py-3 px-6 text-left">S/N</th>
+                <th className="py-3 px-6 text-left">Name</th>
+                <th className="py-3 px-6 text-left">Price</th>
+                <th className="py-3 px-6 text-left">Quantity</th>
+                <th className="py-3 px-6 text-left">Description</th>
+                <th className="py-3 px-6 text-center">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody className="text-gray-600 text-sm font-light">
+              {products.map((product, index) => (
+                <tr key={product._id} className="border-b border-gray-200 hover:bg-gray-100">
+                  <td className="py-3 px-6 text-left whitespace-nowrap">{index + 1}</td>
+                  <td className="py-3 px-6 text-left">{product.name}</td>
+                  <td className="py-3 px-6 text-left">${product.price.toFixed(2)}</td>
+                  <td className="py-3 px-6 text-left">{product.quantity}</td>
+                  <td className="py-3 px-6 text-left">{product.description}</td>
+                  <td className="py-3 px-6 text-center">
+                    <button 
+                      className="text-blue-500 hover:underline mr-4"
+                      onClick={() => handleEditProduct(product)}
+                    >
+                      Edit
+                    </button>
+                    <button 
+                      className="text-red-500 hover:underline" 
+                      onClick={() => handleDelete(product)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Card for mobile screens */}
+        <div className="md:hidden space-y-4">
+          {products.map((product, index) => (
+            <div key={product._id} className="bg-white shadow-md rounded-lg p-4">
+              <div className="flex justify-between items-center mb-2">
+                <h2 className="text-xl font-semibold">{product.name}</h2>
+                <span className="text-gray-600">#{index + 1}</span>
+              </div>
+              <p className="text-gray-600 mb-2">${product.price.toFixed(2)}</p>
+              <p className="text-gray-600 mb-2">Quantity: {product.quantity}</p>
+              <p className="text-gray-600 mb-4">{product.description}</p>
+              <div className="flex justify-end space-x-2">
+                <button 
+                  className="text-blue-500 hover:underline"
+                  onClick={() => handleEditProduct(product)}
+                >
+                  Edit
+                </button>
+                <button 
+                  className="text-red-500 hover:underline"
+                  onClick={() => handleDelete(product)}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
       <ProductModal
         isOpen={isModalOpen}
