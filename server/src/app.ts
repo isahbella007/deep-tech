@@ -39,9 +39,9 @@ app.use(session({
   rolling: true,
   cookie: { 
     maxAge: 1000 * 60 * 30,  // 30 minutes expiration
-    secure: false, // set to false for local testing
-    // sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
-    httpOnly: false, // temporarily set to false for debugging
+    secure: true, //for production/hosting, allow so that cookies are sent over https
+    sameSite:  'none', //use this because the frontend and backend are on different domains in dev, comment out or set to lax
+    httpOnly: true, // temporarily set to false for debugging
   },
   name: 'sessionId' //session name
 }));

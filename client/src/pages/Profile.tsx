@@ -26,8 +26,8 @@ const Profile: React.FC = () => {
   const { isAuthenticated, user } = useSelector((state: RootStateOrAny) => state.auth);
   
   console.log('Profile -> isAuthenticated', isAuthenticated)
+  console.log('Profile -> user', user)
   const [errorMessage, setErrorMessage] = useState<string | undefined>();
-  const [userId, setUserId] = useState<string | undefined>();
   const [initialValues, setInitialValues] = useState<FormValues>({
     username: '',
     password: '',
@@ -37,22 +37,22 @@ const Profile: React.FC = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      setUserId(user?._id);
-      fetchUser();
+    if (isAuthenticated && user && user._id) {
+      fetchUser(user?._id);
     }
   }, [isAuthenticated, user]);
 
-  const fetchUser = async () => {
+  const fetchUser = async (userId: any) => {
     try {
-      if (userId) {
-        const userData = await getUser(userId);
-        setInitialValues({
-          username: userData.username,
-          password: '',
-          isAdmin: userData.isAdmin
-        });
-      }
+      console.log('The user id is ', userId)
+      
+      const userData = await getUser(user?._id);
+      setInitialValues({
+        username: userData.username,
+        password: '',
+        isAdmin: userData.isAdmin
+      });
+    
     } catch (error: any) {
       console.error('Failed to fetch user data:', error);
       setErrorMessage(error.response?.data?.message || 'Failed to fetch user data');
@@ -60,15 +60,15 @@ const Profile: React.FC = () => {
   };
 
   const handleSubmit = async (values: FormValues, { setSubmitting }: any) => {
-    if (!userId) return;
+    if (!user?._id) return;
     setIsUpdating(true);
     try {
-      await updateUser(userId, {
+      await updateUser(user?._id, {
         username: values.username,
         ...(values.password && { password: values.password }),
         isAdmin: values.isAdmin
       });
-      await fetchUser();
+      await fetchUser(user?._id);
       // Show success message to user
     } catch (error: any) {
       console.error('Failed to update user:', error);
@@ -80,11 +80,12 @@ const Profile: React.FC = () => {
   };
 
   const handleDelete = async () => {
-    if (!userId) return;
+    if (!user?._id) return;
     setIsDeleting(true);
     if (window.confirm('Are you sure you want to delete your profile? This action cannot be undone.')) {
       try {
-        await deleteUser(userId);
+        console.log('Profile -> Delete', user?._id)
+        await deleteUser(user?._id);
         Cookies.remove('sessionId');
         Cookies.remove('visitorCartId');
         await userLogout();

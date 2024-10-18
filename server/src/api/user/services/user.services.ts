@@ -42,6 +42,10 @@ export class UserService {
 
     async deleteUser(userId: string): Promise<void> {
         const result = await UserModel.findByIdAndDelete(userId);
+        if (!result) {
+            throw ErrorBuilder.notFound('User not found');
+        }
+    
         // we also need to delete the cart associated with them 
         await CartModel.findByIdAndDelete({user: userId})
         if (!result) {
