@@ -48,5 +48,3 @@ export const clearCart = async (): Promise<Cart> => {
   const response = await axios.post(`${BaseUrl}cart/clear`, {});
   return response.data.data;
 };
-
-// You can add other cart-related functions here as needed
