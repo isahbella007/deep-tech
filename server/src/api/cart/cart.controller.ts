@@ -54,6 +54,7 @@ export class CartController {
       const userId = req.user ? req.user._id : null;
       let cartId = req.cookies.visitorCartId || null;
 
+      console.log('Cart Controller -> Am I logged in',userId )
       console.log('Cart Controller -> we are adding to cart ', userId, cartId)
       if(!userId && !cartId){ 
         //  when you are adding to cart, if for some reason you cannot find the cartId and userId. generate again

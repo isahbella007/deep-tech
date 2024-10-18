@@ -127,7 +127,7 @@ async clearCart(userId: mongoose.Schema.Types.ObjectId | null, cartId: string | 
         if (!cart) {
           cart = new CartModel({ user: userId, items: [] });
         }
-        console.log('Cart Service -> getOrCreateCart no user', cart)
+        console.log('Cart Service -> getOrCreateCart user found user', cart)
       } else if (cartId) {
         cart = await CartModel.findOne({ cartId: cartId }).populate('items.product');
         if (!cart) {
