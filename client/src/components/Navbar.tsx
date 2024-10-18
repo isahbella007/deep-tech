@@ -1,14 +1,15 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 import { logout } from '../store/authSlice';
 import { useEffect, useState } from 'react';
-import { fetchCart,  setItemAdded } from '../store/cartSlice';
+import { fetchCart,  setItemAdded, setItems } from '../store/cartSlice';
 import Cookies from 'js-cookie';
 import { userLogout } from '../api/auth';
 import { Menu } from 'lucide-react';
 
 const Navbar = () => { 
     const dispatch = useDispatch();
+    const navigate = useNavigate()
     const {isAuthenticated, user} = useSelector((state: RootStateOrAny) => state.auth)
     const {itemAdded, items} = useSelector((state: RootStateOrAny) => state.cart)
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,7 +31,9 @@ const Navbar = () => {
         await userLogout()
         Cookies.remove('visitorCartId');
         Cookies.remove('sessionId');
+        dispatch(setItems([]))
         dispatch(logout());
+        navigate('/')
     };
     
     const NavLinks = () => (
