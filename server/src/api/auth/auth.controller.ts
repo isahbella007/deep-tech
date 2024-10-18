@@ -52,17 +52,6 @@ class AuthController {
                           res.clearCookie('cartId')
                         }
                         
-                        // Set a secure cookie with the session ID
-                        res.cookie('sessionId', req.sessionID, {
-                            httpOnly: true,
-                            secure: true,
-                            sameSite: 'none',
-                            // secure: false,
-                            // sameSite: 'lax',
-                            maxAge: 30 * 60 * 1000, // 30 minutes
-                            // domain: '.onrender.com'
-                        });
-
                         // Remove any session-related code if not needed
                         return ResponseFormatter.success(res, { user }, 'Login successful');
 

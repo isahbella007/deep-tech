@@ -11,7 +11,6 @@ import session from "express-session";
 import { config } from "./config";
 import routes from "./routes";
 import cookieParser from "cookie-parser"
-import { persistCartId } from "./middleware/persist";
 
 const app = express();
 
@@ -50,7 +49,6 @@ app.use(session({
     secure: true, //for production/hosting, allow so that cookies are sent over https
     sameSite:  'none', //use this because the frontend and backend are on different domains in dev, comment out or set to lax
     httpOnly: true, // temporarily set to false for debugging
-    domain: '.onrender.com' // Add this line
   },
   name: 'sessionId' //session name
 }));
