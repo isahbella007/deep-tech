@@ -1,6 +1,5 @@
 import axios from "axios"
 import { IProduct } from "../types";
-import dotenv from "dotenv"
 import { BaseUrl } from "../constant";
 
 // console.log(BaseUrl)

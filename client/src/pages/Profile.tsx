@@ -61,7 +61,7 @@ const Profile = () => {
         if (!userId) return;
 
         try {
-            const updatedUser = await updateUser(userId, {
+            await updateUser(userId, {
             username: values.username,
             ...(values.password && { password: values.password }),
             isAdmin: values.isAdmin

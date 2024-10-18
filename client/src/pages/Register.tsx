@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -32,7 +31,7 @@ const Register = () => {
 
   const handleSubmit = async(values: RegisterFormValues) => {
     try{ 
-      const response = await userRegister(values.username, values.password, values.isAdmin) 
+      await userRegister(values.username, values.password, values.isAdmin) 
       // console.log('The response is', response)
       // In here, include like a state loader or maybe dispatch the global state loader so that it shows everytime
       navigate('/login');
